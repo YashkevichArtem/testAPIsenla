@@ -10,8 +10,7 @@ import io.restassured.specification.RequestSpecification;
 import model.Category;
 import model.Pet;
 import model.TagPet;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +19,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.requestSpecification;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TestPracticum {
 
     String baseUri = "https://petstore.swagger.io/v2";
@@ -39,6 +39,7 @@ public class TestPracticum {
             .log(LogDetail.BODY)
             .build();
 
+    @Order(1)
     @Test
     public void petTestFindByStatus(){
         Response response = given()
@@ -55,6 +56,7 @@ public class TestPracticum {
         System.out.println(id);
     }
 
+    @Order(2)
     @Test
     public void petTestPost(){
         TagPet tag = new TagPet(1234,"Barbos");
@@ -68,6 +70,7 @@ public class TestPracticum {
                 .post("/pet");
     }
 
+    @Order(3)
     @Test
     public void petTestFindById(){
         Response response = given()
@@ -78,6 +81,7 @@ public class TestPracticum {
         response.prettyPrint();
     }
 
+    @Order(4)
     @Test
     public void petTestPutUpd(){
         TagPet tag = new TagPet(1234,"Opos");
@@ -90,6 +94,7 @@ public class TestPracticum {
                 .put(pet);
     }
 
+    @Order(5)
     @Test
     public void petTestDelete(){
         TagPet tag = new TagPet(1234,"Opos");
